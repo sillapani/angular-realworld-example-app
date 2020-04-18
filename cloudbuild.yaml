@@ -25,4 +25,3 @@
    args: ['acl','ch','-u','AllUsers:R','-r', '\${_ANGULAR_APP_BUCKET_PATH}']
    waitFor:
    - copy_prerendered_files
- CLOUDBUILD_FILE
