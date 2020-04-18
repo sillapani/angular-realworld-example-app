@@ -1,8 +1,13 @@
-steps:
-
-  # Install node packages
-- name: 'gcr.io/cloud-builders/npm'
-  args: [ 'install' ]
+ steps:
+ - id: install_packages
+   name: 'gcr.io/cloud-builders/npm'
+   args:
+   - 'install'
+ - id: prerender_browser_files
+   name: 'gcr.io/cloud-builders/npm'
+   args:
+   - 'run'
+   - 'build:prerender'
 
   # Build productive files
 - name: 'gcr.io/cloud-builders/npm'
@@ -17,4 +22,3 @@ images: ['gcr.io/sri-illapani-sre-w1-project/angular-app']
   # Deploy to google cloud app egnine
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--version=prod']
-
