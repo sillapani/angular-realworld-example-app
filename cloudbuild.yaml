@@ -1,10 +1,14 @@
- steps:
- - id: install_packages
-   name: 'gcr.io/cloud-builders/npm'
-   args:
-   - 'install'
- - id: prerender_browser_files
-   name: 'gcr.io/cloud-builders/npm'
-   args:
-   - 'run'
-   - 'build:prerender'
+steps:
+# Install Angular
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install','-g','@angular/cli' ]
+# Install Dependencies
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+# build Project in mode Prod.
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run','ng','build','--prod','--aot']
+# deploy in App Engine
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
+timeout: "3000s"
