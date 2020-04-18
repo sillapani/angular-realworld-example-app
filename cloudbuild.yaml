@@ -8,12 +8,3 @@
    args:
    - 'run'
    - 'build:prerender'
-   
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/sri-illapani-sre-w1-project/angular-app', '.']
-images: ['gcr.io/sri-illapani-sre-w1-project/angular-app']
-
-
-  # Deploy to google cloud app egnine
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', '--version=prod']
