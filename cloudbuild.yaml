@@ -8,12 +8,7 @@
    args:
    - 'run'
    - 'build:prerender'
-
-  # Build productive files
-- name: 'gcr.io/cloud-builders/npm'
-  args: [ 'run', 'build', '--prod' ]
-
-
+   
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/sri-illapani-sre-w1-project/angular-app', '.']
 images: ['gcr.io/sri-illapani-sre-w1-project/angular-app']
