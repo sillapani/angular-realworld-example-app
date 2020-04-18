@@ -1,29 +1,14 @@
- steps:
- - id: install_packages
-   name: 'gcr.io/cloud-builders/npm'
-   args:
-   - 'install'
- - id: prerender_browser_files
-   name: 'gcr.io/cloud-builders/npm'
-   args:
-   - 'run'
-   - 'build:prerender'
-   waitFor:
-   - install_packages
- - id: copy_prerendered_files
-   name: 'gcr.io/cloud-builders/gsutil'
-   args: ['cp','-r','dist/browser/*', 'gs://sri-illapani-sre-w1-project-angular-app']
-   waitFor:
-   - prerender_browser_files
- - id: set_website_configuration
-   name: 'gcr.io/cloud-builders/gsutil'
-   args: ['web', 'set', '-m', 'index.html','gs://sri-illapani-sre-w1-project-angular-app']
-   waitFor:
-   - copy_prerendered_files
- - id: set_permissions_for_website_files
-   name: 'gcr.io/cloud-builders/gsutil'
-   args: ['acl','ch','-u','AllUsers:R','-r', 'gs://sri-illapani-sre-w1-project-angular-app']
-   waitFor:
-   - copy_prerendered_files   
+steps:
 
-   
+  # Install node packages
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'install' ]
+
+  # Build productive files
+- name: 'gcr.io/cloud-builders/npm'
+  args: [ 'run', 'build', '--prod' ]
+
+  # Deploy to google cloud app egnine
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', '--version=prod']
+
